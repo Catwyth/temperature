@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Last Temperature{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Last Temperature</h1>
+
+        {% if lastTemperature %}
+            <div class="temperature-display">
+                <p class="temperature-value">{{ lastTemperature.temperature }}°C</p>
+                <p class="temperature-time">Recorded at {{ lastTemperature.createdAt|date('Y-m-d H:i:s') }}</p>
+            </div>
+        {% else %}
+            <div class="no-data">
+                <p>No temperature data available yet. Please log some data via the API.</p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

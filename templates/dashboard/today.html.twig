@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Today's Temperatures{% endblock %}
+
+{% block body %}
+    <h1>Today's Temperatures</h1>
+
+    <div style="height: 400px;">
+        <canvas id="todayChart"></canvas>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('todayChart');
+            const chartData = {{ chartData|json_encode|raw }};
+
+            new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+        });
+    </script>
+{% endblock %}

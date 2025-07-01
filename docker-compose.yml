@@ -1,0 +1,54 @@
+
+services:
+  php:
+    build:
+      context: .
+      target: frankenphp_dev
+    volumes:
+      - ./:/app
+    ports:
+      - "14433:80"
+      - "14434:443"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SERVER_NAME: ':80'
+      TRUSTED_PROXIES: '127.0.0.1,172.0.0.0/8'
+      TRUSTED_HOSTS: '^localhost$$'
+      DATABASE_URL: 'postgresql://app:password@db:5432/app?serverVersion=16&charset=utf8'
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: 'app'
+      POSTGRES_USER: 'app'
+      POSTGRES_PASSWORD: 'password'
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+###> doctrine/doctrine-bundle ###
+  database:
+    image: postgres:${POSTGRES_VERSION:-16}-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+    volumes:
+      - database_data:/var/lib/postgresql/data:rw
+      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/db/data:/var/lib/postgresql/data:rw
+###< doctrine/doctrine-bundle ###
+
+volumes:
+  db_data:
+
+###> doctrine/doctrine-bundle ###
+  database_data:
+###< doctrine/doctrine-bundle ###
