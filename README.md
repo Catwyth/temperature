@@ -97,3 +97,45 @@ Remplacez `your_secret_api_token` par le token que vous avez configuré et `25.5
 - `assets/` : Fichiers JavaScript et CSS pour le frontend (gérés par Webpack Encore).
 
 
+## Info
+Construit avec https://blog.google/technology/developers/introducing-gemini-cli-open-source-ai-agent/ et ce prompt
+
+```
+Génère une application web complète en PHP 8.4 avec le framework Symfony 7, utilisant FrankenPHP, Docker, et MySQL.
+Fonctionnalités attendues :
+1. API :
+
+    Une API REST permettant à un capteur de température de transmettre une valeur numérique (température en degrés Celsius) avec un horodatage.
+
+    Endpoint protégé par une clé API ou token simple.
+
+2. Interface utilisateur :
+
+    Une page qui affiche la dernière température reçue.
+
+    Une page avec un graphique de la température de la journée en cours (par heure).
+
+    Une page avec un graphique des températures des 30 derniers jours (agrégées par jour).
+
+Contraintes techniques :
+
+    Base de données : MySQL, avec une table pour stocker les températures (id, temperature, created_at).
+
+    Docker : Fournir un docker-compose complet incluant FrankenPHP et MySQL.
+
+    Utiliser FrankenPHP pour le serveur HTTP PHP natif.
+
+    Le frontend peut utiliser Twig ou une solution simple intégrée à Symfony.
+
+    Les graphiques peuvent être générés avec une bibliothèque JS comme Chart.js.
+
+Livrables :
+
+    Code source complet de l'application Symfony.
+
+    Fichier docker-compose.yml opérationnel.
+
+    Instructions pour l’installation et l’utilisation.
+
+Fournis un code prêt à déployer ou exécuter localement.
+```
